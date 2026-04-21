@@ -1,1 +1,0 @@
-# This is where the main app will be running, and where I will be calling the askGemma function to get the replies from my local Gemma model
