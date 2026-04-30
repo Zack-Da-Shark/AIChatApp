@@ -24,15 +24,19 @@ inputBox.bind("<Return>", lambda event: sendMessage())
 def handoff(query):
     # Sends the query to the conversation handler and gets the response
     # Outlining this so I can run this on a separate thread to avoid freezing the UI
+    textbox.configure(state="normal")
+    textbox.insert("end", f"You: {query}\n")
+    textbox.configure(state="disabled")
+
+    # Now wait for Gemma
     response = sendQuery(query)
     textbox.configure(state="normal")
-    textbox.insert("end", f"\nYou: {query}\nGemma: {response}\n")
-    textbox.configure(state="normal")
+    textbox.insert("end", f"Gemma: {response}\n\n")
+    textbox.configure(state="disabled")
 
     # re-enable the text box you moron
 
     inputBox.configure(state="normal")
-    textbox.configure(state="disabled")
 
 # Send the input to the conversation handler and get the response, then display it in the chatbox
 def sendMessage():
@@ -54,9 +58,8 @@ def sendMessage():
 
 # Need to implement functionality but looks good
 
+
 textbox = customtkinter.CTkTextbox(app, width=1000, height=400, state="disabled", wrap="word")
-textbox.insert("0.0", "Welcome to the Gemma chat! Ask me anything!")
-textbox.configure(state="disabled")
 textbox.pack(pady=20)
 
 # Or click a button to send the message
